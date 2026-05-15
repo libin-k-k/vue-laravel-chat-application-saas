@@ -1,0 +1,201 @@
+/* ==========================================================================
+   Guest / Auth Layout
+   ========================================================================== */
+
+.auth-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--color-bg);
+}
+
+@media (min-width: 992px) {
+    .auth-layout {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 1200px) {
+    .auth-layout {
+        grid-template-columns: 55% 45%;
+    }
+}
+
+/* --- Brand panel --- */
+.auth-layout__brand {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #0c7d2f 0%, #12b543 45%, #3fcc6f 100%);
+}
+
+@media (min-width: 992px) {
+    .auth-layout__brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+    }
+}
+
+.auth-layout__brand-glow {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 70% 60% at 30% 40%, rgba(255,255,255,0.12), transparent),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(0,0,0,0.1), transparent);
+    pointer-events: none;
+}
+
+.auth-layout__brand-content {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    max-width: 420px;
+}
+
+.auth-layout__logo {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-layout__logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.auth-layout__brand-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.5px;
+}
+
+.auth-layout__brand-tagline {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.82);
+    margin: 0 0 2rem;
+    line-height: 1.6;
+}
+
+.auth-layout__features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.auth-layout__features li {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    color: rgba(255,255,255,0.9);
+}
+
+.auth-layout__feature-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    flex-shrink: 0;
+}
+
+/* Decorative circles */
+.auth-layout__brand-circles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.auth-layout__circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+.auth-layout__circle--1 {
+    width: 300px; height: 300px;
+    right: -80px; bottom: -80px;
+}
+
+.auth-layout__circle--2 {
+    width: 200px; height: 200px;
+    right: 40px; bottom: 60px;
+}
+
+.auth-layout__circle--3 {
+    width: 120px; height: 120px;
+    left: -30px; top: -30px;
+    border-color: rgba(255,255,255,0.06);
+}
+
+/* --- Form panel --- */
+.auth-layout__form-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 1.5rem;
+    background: var(--color-bg);
+}
+
+@media (min-width: 576px) {
+    .auth-layout__form-panel {
+        padding: 2rem;
+    }
+}
+
+.auth-layout__form-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+}
+
+.auth-layout__form-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.auth-layout__form-logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.auth-layout__form-logo-text {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.auth-layout__form-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+.auth-layout__form-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    padding-top: 1rem;
+}

@@ -1,0 +1,207 @@
+/* ==========================================================================
+   Chat Contact Item
+   ========================================================================== */
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    border-bottom: 1px solid #f3f4f6;
+    transition: background 0.1s;
+}
+
+[data-theme="dark"] .contact-item {
+    border-bottom-color: #21262d;
+}
+
+.contact-item:hover {
+    background: #f3f4f6;
+}
+
+[data-theme="dark"] .contact-item:hover {
+    background: #21262d;
+}
+
+.contact-item--active {
+    background: rgba(18, 181, 67, 0.1);
+    border-left: 3px solid #12b543;
+}
+
+[data-theme="dark"] .contact-item--active {
+    background: rgba(30, 201, 84, 0.12);
+    border-left-color: #1ec954;
+}
+
+.contact-item--active:hover {
+    background: rgba(18, 181, 67, 0.14);
+}
+
+[data-theme="dark"] .contact-item--active:hover {
+    background: rgba(30, 201, 84, 0.18);
+}
+
+/* Avatar */
+.contact-item__avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.contact-item__avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-item__avatar--fallback {
+    background: rgba(18, 181, 67, 0.15);
+    color: #0f9a39;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .contact-item__avatar--fallback {
+    background: rgba(30, 201, 84, 0.18);
+    color: #3fcc6f;
+}
+
+.contact-item__online {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #12b543;
+    border: 2px solid #f9fafb;
+}
+
+[data-theme="dark"] .contact-item__online {
+    background: #1ec954;
+    border-color: #161b22;
+}
+
+/* Body */
+.contact-item__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.contact-item__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.contact-item__name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #111827;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+[data-theme="dark"] .contact-item__name {
+    color: #f0f3f6;
+}
+
+.contact-item__time {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .contact-item__time {
+    color: #6b7280;
+}
+
+.contact-item__preview {
+    font-size: 0.8125rem;
+    color: #6b7280;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+[data-theme="dark"] .contact-item__preview {
+    color: #9ca3af;
+}
+
+.contact-item__preview--unread {
+    color: #111827;
+    font-weight: 500;
+}
+
+[data-theme="dark"] .contact-item__preview--unread {
+    color: #f0f3f6;
+}
+
+.contact-item__tick {
+    display: inline-flex;
+    color: #12b543;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .contact-item__tick {
+    color: #1ec954;
+}
+
+.contact-item__tick svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.contact-item__badge {
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.3rem;
+    border-radius: 9999px;
+    background: #12b543;
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .contact-item__badge {
+    background: #1ec954;
+}
+
+.contact-item__muted {
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .contact-item__muted {
+    color: #6b7280;
+}
+
+.contact-item__muted svg {
+    width: 0.9rem;
+    height: 0.9rem;
+}

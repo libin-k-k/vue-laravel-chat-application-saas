@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title inertia>{{ config('app.name', 'Chat Application') }}</title>
+
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+
+        <!-- Theme init: prevent flash before Vue mounts -->
+        <script>
+            (function () {
+                var t = localStorage.getItem('chat-theme') ||
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', t);
+            })();
+        </script>
+
+        @routes
+        @vite(['resources/js/app.js'])
+        @inertiaHead
+    </head>
+    <body>
+        @inertia
+    </body>
+</html>

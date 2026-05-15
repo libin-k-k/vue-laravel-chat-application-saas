@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Chat Messages Container
+   ========================================================================== */
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+}
+
+[data-theme="dark"] .chat-messages {
+    background: #0f1117;
+}
+
+/* Date separator */
+.chat-messages__date-sep {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.chat-messages__date-sep span {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+[data-theme="dark"] .chat-messages__date-sep span {
+    background: #21262d;
+    border-color: #30363d;
+    color: #9ca3af;
+}
+
+/* Typing indicator */
+.chat-messages__typing {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.875rem 0.5rem;
+}
+
+.chat-messages__typing-bubble {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 0.5rem 0.75rem;
+    background: #f3f4f6;
+    border-radius: 1rem;
+    border-bottom-left-radius: 0.2rem;
+}
+
+[data-theme="dark"] .chat-messages__typing-bubble {
+    background: #21262d;
+}
+
+.chat-messages__typing-bubble span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #9ca3af;
+    animation: typing-bounce 1.2s infinite ease-in-out;
+}
+
+[data-theme="dark"] .chat-messages__typing-bubble span {
+    background: #6b7280;
+}
+
+.chat-messages__typing-bubble span:nth-child(2) { animation-delay: 0.2s; }
+.chat-messages__typing-bubble span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-5px); }
+}
+
+.chat-messages__typing-label {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+[data-theme="dark"] .chat-messages__typing-label {
+    color: #6b7280;
+}
+
+.chat-messages__pad {
+    height: 0.75rem;
+    flex-shrink: 0;
+}

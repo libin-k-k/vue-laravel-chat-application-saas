@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Theme Toggle
+   ========================================================================== */
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 9999px;
+    outline: none;
+    transition: opacity 0.15s;
+}
+
+.theme-toggle:hover {
+    opacity: 0.8;
+}
+
+.theme-toggle:focus-visible .theme-toggle__track {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+.theme-toggle__track {
+    position: relative;
+    width: 2.75rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    padding: 0 0.2rem;
+    transition: background 0.25s, justify-content 0.25s;
+}
+
+[data-theme="light"] .theme-toggle__track {
+    background: var(--color-gray-300);
+    justify-content: flex-start;
+}
+
+[data-theme="dark"] .theme-toggle__track {
+    background: var(--color-primary-500);
+    justify-content: flex-end;
+}
+
+.theme-toggle__thumb {
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    transition: transform 0.25s;
+}
+
+[data-theme="light"] .theme-toggle__thumb {
+    color: var(--color-primary-500);
+}
+
+[data-theme="dark"] .theme-toggle__thumb {
+    color: var(--color-primary-800);
+}
+
+.theme-toggle__icon {
+    width: 0.75rem;
+    height: 0.75rem;
+}

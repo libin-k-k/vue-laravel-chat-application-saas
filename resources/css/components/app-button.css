@@ -1,0 +1,27 @@
+/* ==========================================================================
+   App Button — extends .btn from style.css
+   ========================================================================== */
+
+.btn--block {
+    width: 100%;
+}
+
+.btn--loading {
+    cursor: wait;
+    opacity: 0.8;
+}
+
+.btn__spinner {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: btn-spin 0.65s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
+}

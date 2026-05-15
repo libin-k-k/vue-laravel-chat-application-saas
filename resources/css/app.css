@@ -1,0 +1,40 @@
+/* ==========================================================================
+   App — master stylesheet
+   Import order: tokens → base → components → chat → pages → Tailwind
+   ========================================================================== */
+
+/* 1. Design tokens */
+@import './color.css';
+@import './responsive.css';
+
+/* 2. Base styles */
+@import './style.css';
+
+/* 3. UI components */
+@import './components/theme-toggle.css';
+@import './components/app-button.css';
+@import './components/app-input.css';
+
+/* 4. Auth / guest layout */
+@import './components/guest-layout.css';
+@import './components/auth-form.css';
+
+/* 5. Chat components */
+@import './chat/chat-app.css';
+@import './chat/chat-sidebar.css';
+@import './chat/chat-contact-item.css';
+@import './chat/chat-header.css';
+@import './chat/chat-messages.css';
+@import './chat/chat-message.css';
+@import './chat/chat-input.css';
+@import './chat/chat-empty-state.css';
+@import './chat/emoji-picker.css';
+@import './chat/attachment-menu.css';
+
+/* 6. Page-level */
+@import './components/dashboard.css';
+
+/* 7. Tailwind utilities (lowest priority so custom vars win) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,0 +1,35 @@
+/* ==========================================================================
+   App Input — wraps .form-input from style.css
+   ========================================================================== */
+
+.app-input-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.app-input__field-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.app-input__field-wrap .form-input {
+    flex: 1;
+}
+
+.app-input__error {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-danger);
+}
+
+.app-input__hint {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+}
+
+.form-input--error {
+    border-color: var(--color-danger) !important;
+}
