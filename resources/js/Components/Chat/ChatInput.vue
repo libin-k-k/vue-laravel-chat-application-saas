@@ -1,77 +1,103 @@
 <script src="./ChatInput.js"></script>
 
 <template>
-    <div class="chat-input-bar">
+    <div class="chat-input-bar" :class="{ 'chat-input-bar--voice': voiceMode }">
+        <VoiceRecorderPanel
+            v-if="voiceMode"
+            :is-recording="isRecording"
+            :duration-label="formattedDuration"
+            :preview-url="previewUrl"
+            :preview-duration="previewDuration"
+            @discard="onDiscardVoice"
+            @send="onSendVoice"
+        />
 
-        <!-- Emoji button + picker -->
-        <div class="chat-input-bar__popup-wrap" @click.stop>
-            <button
-                type="button"
-                class="chat-input-bar__icon-btn"
-                :class="{ 'chat-input-bar__icon-btn--active': showEmojiPicker }"
-                title="Emoji"
-                :disabled="disabled"
-                @click="toggleEmojiPicker"
-            >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M8 13s1.5 2 4 2 4-2 4-2" stroke-linecap="round"/>
-                    <line x1="9" y1="9" x2="9.01" y2="9" stroke-linecap="round" stroke-width="3"/>
-                    <line x1="15" y1="9" x2="15.01" y2="9" stroke-linecap="round" stroke-width="3"/>
-                </svg>
-            </button>
+        <template v-else>
+            <!-- Emoji -->
+            <div class="chat-input-bar__popup-wrap" @click.stop>
+                <button
+                    type="button"
+                    class="chat-input-bar__icon-btn"
+                    :class="{ 'chat-input-bar__icon-btn--active': showEmojiPicker }"
+                    title="Emoji"
+                    :disabled="disabled"
+                    @click="toggleEmojiPicker"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 13s1.5 2 4 2 4-2 4-2" stroke-linecap="round"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9" stroke-linecap="round" stroke-width="3"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9" stroke-linecap="round" stroke-width="3"/>
+                    </svg>
+                </button>
 
-            <EmojiPicker
-                v-if="showEmojiPicker"
-                @select="onEmojiSelect"
-                @close="showEmojiPicker = false"
-            />
-        </div>
+                <EmojiPicker
+                    v-if="showEmojiPicker"
+                    @select="onEmojiSelect"
+                    @close="showEmojiPicker = false"
+                />
+            </div>
 
-        <!-- Attachment button + menu -->
-        <div class="chat-input-bar__popup-wrap" @click.stop>
-            <button
-                type="button"
-                class="chat-input-bar__icon-btn"
-                :class="{ 'chat-input-bar__icon-btn--active': showAttachmentMenu }"
-                title="Attach file"
-                :disabled="disabled"
-                @click="toggleAttachmentMenu"
-            >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
+            <!-- Attachment -->
+            <div class="chat-input-bar__popup-wrap" @click.stop>
+                <button
+                    type="button"
+                    class="chat-input-bar__icon-btn"
+                    :class="{ 'chat-input-bar__icon-btn--active': showAttachmentMenu }"
+                    title="Attach file"
+                    :disabled="disabled"
+                    @click="toggleAttachmentMenu"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
 
-            <AttachmentMenu
-                v-if="showAttachmentMenu"
-                @file-selected="onFileSelected"
-                @close="showAttachmentMenu = false"
-            />
-        </div>
+                <AttachmentMenu
+                    v-if="showAttachmentMenu"
+                    @file-selected="onFileSelected"
+                    @close="showAttachmentMenu = false"
+                />
+            </div>
 
-        <!-- Textarea -->
-        <div class="chat-input-bar__field-wrap">
-            <textarea
-                ref="inputRef"
-                v-model="text"
-                class="chat-input-bar__field"
-                placeholder="Type a message…"
-                rows="1"
-                :disabled="disabled"
-                @keydown="onKeydown"
-                @input="autoResize"
-            />
-        </div>
+            <!-- Textarea -->
+            <div class="chat-input-bar__field-wrap">
+                <textarea
+                    ref="inputRef"
+                    v-model="text"
+                    class="chat-input-bar__field"
+                    placeholder="Type a message…"
+                    rows="1"
+                    :disabled="disabled"
+                    @keydown="onKeydown"
+                    @input="(e) => { autoResize(e); onInput(); }"
+                />
+            </div>
+        </template>
 
-        <!-- Send / Mic button -->
+        <p v-if="voiceError" class="chat-input-bar__voice-error" role="alert">{{ voiceError }}</p>
+        <p
+            v-else-if="micPermissionState === 'prompt' && !voiceMode && !hasText"
+            class="chat-input-bar__mic-hint"
+        >
+            Hold the microphone — your browser will ask for permission
+        </p>
+
+        <!-- Send / hold mic (hidden during voice preview — panel has send) -->
         <button
+            v-if="hasText || isRecording || !hasPreview"
             type="button"
             class="chat-input-bar__send-btn"
-            :class="{ 'chat-input-bar__send-btn--active': hasText }"
-            :title="hasText ? 'Send message' : 'Voice message'"
-            :disabled="disabled"
-            @click="send"
+            :class="{
+                'chat-input-bar__send-btn--active': hasText,
+                'chat-input-bar__send-btn--recording': isRecording,
+            }"
+            :title="hasText ? 'Send message' : 'Hold to record voice'"
+            :disabled="(disabled && !isRecording) || (!hasText && !micSupported)"
+            @click="onMicClick"
+            @pointerdown="!hasText ? onMicPointerDown($event) : null"
+            @pointerup="!hasText ? onMicPointerUp($event) : null"
+            @pointerleave="!hasText && isRecording ? onMicPointerUp($event) : null"
         >
             <svg v-if="hasText" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>

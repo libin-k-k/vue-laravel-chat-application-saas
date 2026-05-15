@@ -138,6 +138,11 @@
     gap: 0.25rem;
 }
 
+.chat-header__status--typing {
+    color: var(--color-primary-500);
+    font-weight: 500;
+}
+
 .chat-header__status--online {
     color: #12b543;
     display: flex;

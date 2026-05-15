@@ -35,6 +35,12 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'broadcast' => [
+                'key' => config('broadcasting.connections.pusher.key'),
+                'cluster' => config('broadcasting.connections.pusher.options.cluster'),
+                'enabled' => config('broadcasting.default') === 'pusher'
+                    && config('broadcasting.connections.pusher.key'),
+            ],
         ];
     }
 }

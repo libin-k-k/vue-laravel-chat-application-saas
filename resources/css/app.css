@@ -30,6 +30,8 @@
 @import './chat/chat-messages.css';
 @import './chat/chat-message.css';
 @import './chat/chat-input.css';
+@import './chat/voice-recorder.css';
+@import './chat/voice-message.css';
 @import './chat/chat-empty-state.css';
 @import './chat/chat-fab.css';
 @import './chat/new-chat-modal.css';

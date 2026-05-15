@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use App\Jobs\SendEmailVerificationJob;
+use App\Mail\ResetPasswordMail;
 use App\Services\EmailVerificationService;
 use App\Support\AppUrl;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -57,8 +60,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
+            'last_seen_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function conversations(): BelongsToMany
+    {
+        return $this->belongsToMany(Conversation::class, 'conversation_participants')
+            ->withPivot(['last_read_message_id'])
+            ->withTimestamps();
     }
 
     public function emailVerificationTokens(): HasMany
@@ -99,6 +110,13 @@ class User extends Authenticatable implements MustVerifyEmail
         $baseUrl = $baseUrl ?? AppUrl::currentBaseUrl();
 
         SendEmailVerificationJob::dispatch($this, $plainToken, $baseUrl);
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        Mail::to($this->email)->send(
+            new ResetPasswordMail($this, $token, AppUrl::currentBaseUrl())
+        );
     }
 
     public function getProfilePhotoUrlAttribute(): ?string

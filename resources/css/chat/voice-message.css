@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Voice message bubble player
+   ========================================================================== */
+
+.voice-msg-player {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 200px;
+    max-width: 260px;
+    padding: 0.25rem 0;
+}
+
+.voice-msg-player audio {
+    display: none;
+}
+
+.voice-msg-player__btn {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    border: none;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.25);
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+}
+
+.chat-msg--in .voice-msg-player__btn {
+    background: rgba(18, 181, 67, 0.15);
+    color: #12b543;
+}
+
+.voice-msg-player--mine .voice-msg-player__btn {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.voice-msg-player__btn:hover {
+    transform: scale(1.06);
+}
+
+.voice-msg-player__btn svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.voice-msg-player__track {
+    flex: 1;
+    position: relative;
+    height: 1.75rem;
+    min-width: 0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.voice-msg-player__fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: rgba(18, 181, 67, 0.2);
+    pointer-events: none;
+    transition: width 0.05s linear;
+}
+
+.voice-msg-player--mine .voice-msg-player__fill {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.voice-msg-player__bars {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    height: 100%;
+}
+
+.voice-msg-player__bar {
+    width: 2px;
+    height: 35%;
+    border-radius: 1px;
+    background: currentColor;
+    opacity: 0.45;
+}
+
+.voice-msg-player--playing .voice-msg-player__bar {
+    animation: voice-msg-bar 0.7s ease-in-out infinite;
+}
+
+.voice-msg-player--playing .voice-msg-player__bar:nth-child(odd) {
+    animation-delay: 0.1s;
+}
+
+@keyframes voice-msg-bar {
+    0%, 100% { height: 30%; opacity: 0.4; }
+    50% { height: 90%; opacity: 0.9; }
+}
+
+.voice-msg-player__time {
+    font-size: 0.6875rem;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.85;
+    flex-shrink: 0;
+    min-width: 2rem;
+}

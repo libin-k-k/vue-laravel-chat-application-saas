@@ -1,4 +1,4 @@
-import { defineComponent, computed, ref } from 'vue';
+import { defineComponent, computed, ref, onMounted } from 'vue';
 import { usePage, useForm } from '@inertiajs/vue3';
 import { useChat } from '@/Composables/useChat';
 import ChatSidebar from '@/Components/Chat/ChatSidebar.vue';
@@ -28,21 +28,37 @@ export default defineComponent({
 
         const page = usePage();
         const authUser = computed(() => page.props.auth?.user);
-        const authId = computed(() => authUser.value?.id ?? 'me');
+        const authId = computed(() => authUser.value?.id ?? null);
 
         const {
             contacts,
             selectedContact,
             searchQuery,
-            sidebarOpen,
+            mobileView,
             messages,
+            authAvatar,
+            authName,
+            loadingConversations,
+            loadingMessages,
+            loadingOlder,
+            hasMoreMessages,
             selectContact,
             startConversation,
             goBack,
             sendMessage,
+            sendVoiceMessage,
+            loadOlderMessages,
+            deleteMessage,
+            canDeleteMessage,
+            onComposerTyping,
+            init,
         } = useChat();
 
         const showNewChatModal = ref(false);
+
+        onMounted(() => {
+            init();
+        });
 
         const logoutForm = useForm({});
         const logout = () => logoutForm.post(route('logout'));
@@ -66,11 +82,22 @@ export default defineComponent({
             contacts,
             selectedContact,
             searchQuery,
-            sidebarOpen,
+            mobileView,
             messages,
+            authAvatar,
+            authName,
+            loadingConversations,
+            loadingMessages,
+            loadingOlder,
+            hasMoreMessages,
             selectContact,
             goBack,
             sendMessage,
+            sendVoiceMessage,
+            loadOlderMessages,
+            deleteMessage,
+            canDeleteMessage,
+            onComposerTyping,
             logout,
             showNewChatModal,
             onNewChat,

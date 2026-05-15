@@ -27,15 +27,24 @@
             <div class="contact-item__row">
                 <span
                     class="contact-item__preview"
-                    :class="{ 'contact-item__preview--unread': contact.unread }"
+                    :class="{
+                        'contact-item__preview--unread': contact.unread,
+                        'contact-item__preview--typing': contact.typing,
+                    }"
                 >
-                    <span v-if="contact.isMine" class="contact-item__tick" title="Sent">
-                        <svg viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M10.97 4.97a.75.75 0 011.07 1.05l-3.99 4.99a.75.75 0 01-1.08.02L4.324 8.384a.75.75 0 111.06-1.06l2.094 2.093 3.473-4.425a.252.252 0 01.02-.022z"/>
-                            <path d="M7.97 4.97a.75.75 0 011.07 1.05L5.05 11.01a.75.75 0 01-1.08.02L1.324 8.384a.75.75 0 011.06-1.06l2.094 2.093L7.97 4.97z"/>
-                        </svg>
-                    </span>
-                    {{ contact.lastMessage || 'Start a conversation' }}
+                    <template v-if="contact.typing">
+                        <span class="contact-item__typing-dots"><span /><span /><span /></span>
+                        typing…
+                    </template>
+                    <template v-else>
+                        <span v-if="contact.isMine" class="contact-item__tick" title="Sent">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M10.97 4.97a.75.75 0 011.07 1.05l-3.99 4.99a.75.75 0 01-1.08.02L4.324 8.384a.75.75 0 111.06-1.06l2.094 2.093 3.473-4.425a.252.252 0 01.02-.022z"/>
+                                <path d="M7.97 4.97a.75.75 0 011.07 1.05L5.05 11.01a.75.75 0 01-1.08.02L1.324 8.384a.75.75 0 011.06-1.06l2.094 2.093L7.97 4.97z"/>
+                            </svg>
+                        </span>
+                        {{ contact.lastMessage || 'Start a conversation' }}
+                    </template>
                 </span>
                 <span v-if="contact.unread" class="contact-item__badge">
                     {{ contact.unread > 99 ? '99+' : contact.unread }}

@@ -16,6 +16,23 @@
     background: #0f1117;
 }
 
+.chat-messages__load-more,
+.chat-messages__loading {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #6b7280;
+    padding: 0.5rem 1rem;
+}
+
+.chat-messages__load-more--hint {
+    opacity: 0.85;
+}
+
+[data-theme="dark"] .chat-messages__load-more,
+[data-theme="dark"] .chat-messages__loading {
+    color: #9ca3af;
+}
+
 /* Date separator */
 .chat-messages__date-sep {
     display: flex;

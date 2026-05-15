@@ -1,10 +1,16 @@
 <script src="./index.js"></script>
 
 <template>
-    <div class="chat-app">
-        <div
+    <div
+        class="chat-app"
+        :class="{
+            'chat-app--mobile-list': mobileView === 'list',
+            'chat-app--mobile-chat': mobileView === 'chat',
+        }"
+    >
+        <section
             class="chat-app__sidebar"
-            :class="{ 'chat-app__sidebar--visible': sidebarOpen || !selectedContact }"
+            aria-label="Conversations"
         >
             <ChatSidebar
                 v-if="authUser"
@@ -17,25 +23,41 @@
                 @logout="logout"
                 @new-chat="onNewChat"
             />
-        </div>
+        </section>
 
-        <div
+        <section
             class="chat-app__main"
-            :class="{ 'chat-app__main--hidden-mobile': !selectedContact }"
+            aria-label="Chat"
         >
             <template v-if="selectedContact">
                 <ChatHeader :contact="selectedContact" @back="goBack" />
                 <ChatMessages
                     :messages="messages"
                     :auth-user-id="authId"
+                    :auth-avatar="authAvatar"
+                    :auth-name="authName"
                     :contact="selectedContact"
+                    :loading="loadingMessages"
+                    :loading-older="loadingOlder"
+                    :has-more="hasMoreMessages"
+                    :can-delete-message="canDeleteMessage"
+                    @load-older="loadOlderMessages"
+                    @delete="deleteMessage"
                 />
-                <ChatInput @send="sendMessage" />
+                <ChatInput
+                    @send="sendMessage"
+                    @send-voice="sendVoiceMessage"
+                    @typing="onComposerTyping"
+                />
             </template>
-            <ChatEmptyState v-else />
-        </div>
+            <ChatEmptyState v-else class="chat-app__empty-desktop" />
+        </section>
 
-        <ChatFab v-if="!selectedContact" @click="onNewChat" />
+        <ChatFab
+            v-if="mobileView === 'list'"
+            class="chat-app__fab"
+            @click="onNewChat"
+        />
 
         <NewChatModal
             v-if="showNewChatModal"

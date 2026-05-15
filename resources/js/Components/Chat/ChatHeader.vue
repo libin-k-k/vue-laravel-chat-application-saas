@@ -24,7 +24,10 @@
             <div class="chat-header__meta">
                 <h2 class="chat-header__name">{{ contact.name }}</h2>
                 <p class="chat-header__status">
-                    <span v-if="contact.online" class="chat-header__status--online">
+                    <span v-if="contact.typing" class="chat-header__status--typing">
+                        typing…
+                    </span>
+                    <span v-else-if="contact.online" class="chat-header__status--online">
                         <span class="chat-header__status-dot" /> Online
                     </span>
                     <span v-else-if="contact.lastSeen" class="chat-header__status--offline">
