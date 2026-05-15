@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Jobs\SendEmailVerificationJob;
 use App\Mail\ResetPasswordMail;
+use App\Mail\VerifyEmailMail;
 use App\Services\EmailVerificationService;
 use App\Support\AppUrl;
 use Illuminate\Support\Facades\Mail;
@@ -106,10 +106,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification(?string $baseUrl = null): void
     {
+        if ($this->hasVerifiedEmail()) {
+            return;
+        }
+
         $plainToken = app(EmailVerificationService::class)->createToken($this);
         $baseUrl = $baseUrl ?? AppUrl::currentBaseUrl();
 
-        SendEmailVerificationJob::dispatch($this, $plainToken, $baseUrl);
+        Mail::to($this->email)->send(
+            new VerifyEmailMail($this, $plainToken, $baseUrl)
+        );
     }
 
     public function sendPasswordResetNotification($token): void

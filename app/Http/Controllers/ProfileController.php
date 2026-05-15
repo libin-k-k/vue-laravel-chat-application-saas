@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfilePrivacyUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Jobs\SendEmailVerificationJob;
-use App\Services\EmailVerificationService;
 use App\Support\AppUrl;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -71,9 +69,7 @@ class ProfileController extends Controller
         $user->save();
 
         if ($emailChanged) {
-            $baseUrl = AppUrl::currentBaseUrl($request);
-            $plainToken = app(EmailVerificationService::class)->createToken($user);
-            SendEmailVerificationJob::dispatch($user, $plainToken, $baseUrl);
+            $user->sendEmailVerificationNotification(AppUrl::currentBaseUrl($request));
 
             Auth::logout();
             $request->session()->invalidate();
