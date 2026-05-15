@@ -2,25 +2,42 @@
 
 <template>
     <aside class="chat-sidebar">
+        <LogoutConfirmModal
+            v-if="showLogoutModal"
+            @confirm="confirmLogout"
+            @cancel="showLogoutModal = false"
+        />
+
         <div class="chat-sidebar__header">
-            <div class="chat-sidebar__header-left">
-                <div class="chat-sidebar__avatar" :title="authUser.name">
-                    <span>{{ authUser.name.charAt(0).toUpperCase() }}</span>
-                </div>
-                <div class="chat-sidebar__user-info">
-                    <span class="chat-sidebar__app-name">{{ authUser.name }}</span>
-                    <span class="chat-sidebar__user-email">{{ authUser.email }}</span>
-                </div>
-            </div>
+            <Link :href="route('profile.edit')" class="chat-sidebar__avatar" :title="authUser.name">
+                <img
+                    v-if="authUser.profile_photo_url"
+                    :src="authUser.profile_photo_url"
+                    :alt="authUser.name"
+                />
+                <span v-else>{{ authUser.name.charAt(0).toUpperCase() }}</span>
+            </Link>
+
             <div class="chat-sidebar__header-actions">
-                <ThemeToggle />
-                <button type="button" class="chat-sidebar__icon-btn" title="New chat">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round" stroke-linejoin="round"/>
+                <button
+                    type="button"
+                    class="chat-sidebar__icon-btn chat-sidebar__icon-btn--new-chat"
+                    title="New chat"
+                    aria-label="New chat"
+                    @click="$emit('new-chat')"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
-                <button type="button" class="chat-sidebar__icon-btn" title="Log out" @click="$emit('logout')">
+                <ThemeToggle />
+                <button
+                    type="button"
+                    class="chat-sidebar__icon-btn chat-sidebar__icon-btn--logout"
+                    title="Log out"
+                    aria-label="Log out"
+                    @click="requestLogout"
+                >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>

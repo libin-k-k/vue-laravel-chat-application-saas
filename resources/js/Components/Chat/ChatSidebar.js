@@ -1,11 +1,13 @@
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import ChatContactItem from '@/Components/Chat/ChatContactItem.vue';
 import ThemeToggle from '@/Components/UI/ThemeToggle.vue';
+import LogoutConfirmModal from '@/Components/Chat/LogoutConfirmModal.vue';
 
 export default defineComponent({
     name: 'ChatSidebar',
 
-    components: { ChatContactItem, ThemeToggle },
+    components: { ChatContactItem, ThemeToggle, Link, LogoutConfirmModal },
 
     props: {
         contacts: { type: Array, required: true },
@@ -14,9 +16,11 @@ export default defineComponent({
         searchQuery: { type: String, default: '' },
     },
 
-    emits: ['select', 'update:searchQuery', 'logout'],
+    emits: ['select', 'update:searchQuery', 'logout', 'new-chat'],
 
-    setup(props) {
+    setup(props, { emit }) {
+        const showLogoutModal = ref(false);
+
         const filteredContacts = computed(() => {
             if (!props.searchQuery) return props.contacts;
             const q = props.searchQuery.toLowerCase();
@@ -26,6 +30,20 @@ export default defineComponent({
             );
         });
 
-        return { filteredContacts };
+        const requestLogout = () => {
+            showLogoutModal.value = true;
+        };
+
+        const confirmLogout = () => {
+            showLogoutModal.value = false;
+            emit('logout');
+        };
+
+        return {
+            filteredContacts,
+            showLogoutModal,
+            requestLogout,
+            confirmLogout,
+        };
     },
 });

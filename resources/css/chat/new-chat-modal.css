@@ -1,0 +1,212 @@
+/* ==========================================================================
+   New Chat Modal — user search
+   ========================================================================== */
+
+.new-chat-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.new-chat-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg-overlay);
+}
+
+.new-chat-modal__panel {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 440px;
+    min-height: min(640px, calc(100vh - 2rem));
+    max-height: min(720px, calc(100vh - 2rem));
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    box-shadow: 0 24px 48px var(--color-shadow-strong);
+    overflow: hidden;
+}
+
+.new-chat-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1rem 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.new-chat-modal__title {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.new-chat-modal__close {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.new-chat-modal__close svg {
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+.new-chat-modal__close:hover {
+    background: var(--color-btn-secondary-bg);
+    color: var(--color-text);
+}
+
+.new-chat-modal__search {
+    position: relative;
+    padding: 0.75rem 1rem;
+}
+
+.new-chat-modal__search-icon {
+    position: absolute;
+    left: 1.625rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.125rem;
+    height: 1.125rem;
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+.new-chat-modal__search-input {
+    width: 100%;
+    padding: 0.625rem 0.875rem 0.625rem 2.5rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.new-chat-modal__search-input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.new-chat-modal__search-input:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px rgba(18, 181, 67, 0.15);
+}
+
+.new-chat-modal__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 0 0.5rem 0.75rem;
+}
+
+.new-chat-modal__status {
+    margin: 0;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.new-chat-modal__status--error {
+    color: var(--color-danger, #dc2626);
+}
+
+.new-chat-modal__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.new-chat-modal__user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.new-chat-modal__user:hover {
+    background: var(--color-btn-secondary-bg);
+}
+
+.new-chat-modal__avatar {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-100, #dcfce7);
+    color: var(--color-primary-700, #15803d);
+    font-size: 0.9375rem;
+    font-weight: 700;
+}
+
+.new-chat-modal__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.new-chat-modal__user-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.new-chat-modal__user-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.new-chat-modal__user-meta {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 767.98px) {
+    .new-chat-modal {
+        padding: 0.75rem;
+    }
+
+    .new-chat-modal__panel {
+        min-height: calc(100dvh - 1.5rem);
+        max-height: calc(100dvh - 1.5rem);
+    }
+}

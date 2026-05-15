@@ -129,6 +129,28 @@ export function useChat() {
         selectedContact.value = null;
     };
 
+    const startConversation = (user) => {
+        let contact = contacts.value.find(c => c.id === user.id);
+        if (!contact) {
+            contact = {
+                id: user.id,
+                name: user.name,
+                avatar: user.profile_photo_url ?? null,
+                online: false,
+                lastMessage: null,
+                lastTime: null,
+                unread: 0,
+                isMine: false,
+                muted: false,
+                typing: false,
+                lastSeen: null,
+            };
+            contacts.value.unshift(contact);
+            messageStore.value[user.id] = [];
+        }
+        selectContact(contact);
+    };
+
     const sendMessage = (text) => {
         if (!selectedContact.value) return;
         const id = selectedContact.value.id;
@@ -159,6 +181,7 @@ export function useChat() {
         messages,
         filteredContacts,
         selectContact,
+        startConversation,
         goBack,
         sendMessage,
     };

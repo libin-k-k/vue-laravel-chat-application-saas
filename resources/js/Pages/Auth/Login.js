@@ -17,7 +17,7 @@ export default defineComponent({
 
     setup() {
         const form = useForm({
-            email: '',
+            login: '',
             password: '',
             remember: false,
         });

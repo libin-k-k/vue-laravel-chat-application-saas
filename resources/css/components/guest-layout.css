@@ -190,6 +190,7 @@
     align-items: center;
     justify-content: center;
     padding: 1rem 0;
+    width: 100%;
 }
 
 .auth-layout__form-footer {

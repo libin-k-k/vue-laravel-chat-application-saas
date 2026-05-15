@@ -18,15 +18,15 @@
 
             <form class="auth-form" @submit.prevent="submit" novalidate>
                 <AppInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    label="Email address"
-                    placeholder="you@example.com"
+                    id="login"
+                    v-model="form.login"
+                    type="text"
+                    label="Email or username"
+                    placeholder="you@example.com or john_doe"
                     autocomplete="username"
                     required
                     autofocus
-                    :error="form.errors.email"
+                    :error="form.errors.login"
                 />
 
                 <div class="auth-form__pw-group">

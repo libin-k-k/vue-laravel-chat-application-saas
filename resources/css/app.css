@@ -14,10 +14,13 @@
 @import './components/theme-toggle.css';
 @import './components/app-button.css';
 @import './components/app-input.css';
+@import './components/app-toggle.css';
+@import './components/confirm-modal.css';
 
 /* 4. Auth / guest layout */
 @import './components/guest-layout.css';
 @import './components/auth-form.css';
+@import './components/username-field.css';
 
 /* 5. Chat components */
 @import './chat/chat-app.css';
@@ -28,11 +31,14 @@
 @import './chat/chat-message.css';
 @import './chat/chat-input.css';
 @import './chat/chat-empty-state.css';
+@import './chat/chat-fab.css';
+@import './chat/new-chat-modal.css';
 @import './chat/emoji-picker.css';
 @import './chat/attachment-menu.css';
 
 /* 6. Page-level */
 @import './components/dashboard.css';
+@import './components/profile-page.css';
 
 /* 7. Tailwind utilities (lowest priority so custom vars win) */
 @tailwind base;

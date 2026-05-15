@@ -10,6 +10,25 @@
     gap: 1.5rem;
 }
 
+/* Wider variant used by the register page */
+.auth-form-wrap--register {
+    max-width: 560px;
+}
+
+/* 2-column row — single column on mobile, 2 cols on tablet+ */
+.auth-form__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: start;
+}
+
+@media (min-width: 640px) {
+    .auth-form__row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 .auth-form-wrap__head {
     display: flex;
     flex-direction: column;
